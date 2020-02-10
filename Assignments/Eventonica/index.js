@@ -1,12 +1,14 @@
 class User{
-    constructor(user){
+    constructor(userId, user){
+        this.userId =userId;
         this.user = user;
         this.userEvents = [];
     }
 }
 
 class Event{
-    constructor(eventCategory, eventName, eventTime){
+    constructor(eventId, eventCategory, eventName, eventTime){
+        this.eventId = eventId;
         this.eventCategory = eventCategory;
         this.eventName = eventName;
         this.eventTime = eventTime;
@@ -20,48 +22,54 @@ class EventRecommender {
         this.AllUsers = [];
     }
 
-    addEvent(eventCategory, eventName, eventTime) {
+    addEvent(eventId, eventCategory, eventName, eventTime) {
     // Adds a new Event to the System
         const convertDate = new Date(eventTime);
         //converting Date
-        const eventObj = new Event(eventCategory, eventName, convertDate);
+        const eventObj = new Event(eventId, eventCategory, eventName, convertDate);
         //create new event obj using event class
         this.AllEvents.push(eventObj);
         //adding the new event obj into the event array
     }
 
-    addUser(userName) {
+    addUser(userId, userName) {
     // Adds a new User to the System
-        const userObj = new User(userName);
+        const userObj = new User(userId, userName);
         //create new user obj using user class
         this.AllUsers.push(userObj);
         //adding new user obj to user array
     }
 
-    saveUserEvent(user, event){
+    saveUserEvent(userId, eventId){
     // Allow users to save events to a personal Events array.
-        const eventToAdd = this.AllEvents.find(eventN => eventN.eventName === event);
+        const eventToAdd = this.AllEvents.find(eventN => eventN.eventId === eventId);
         //finding the event obj in the event array and storing it into a variable
-        const userIndex = this.AllUsers.findIndex(userN => userN.user === user);
+        const userIndex = this.AllUsers.findIndex(userN => userN.userId === userId);
         //finding the user's obj index in the users obj array 
         this.AllUsers[userIndex].userEvents.push(eventToAdd);
         //pushing the event obj into the user's obj's event array by using the found index of the user's obj in AllUsers array
     }
 
-    deleteUser(user) {
+    deleteUser(userId) {
     // Deletes a User from the system
-        const userIndex = this.AllUsers.findIndex(userN => userN.user === user);
+        const userIndex = this.AllUsers.findIndex(userN => userN.userId === userId);
         //finding the user's obj index in the user obj array
-        this.AllUsers.splice(userIndex, 1);
-        //removing 1 element starting from userIndex #
+        if(userIndex > -1){
+        //if userId exist
+            this.AllUsers.splice(userIndex, 1);
+            //removing 1 element starting from userIndex #
+        }
     }
    
-    deleteEvent(array,eventName) {
+    deleteEvent(array,eventId) {
     // Deletes the Event from any event array
-    const eventIndex = array.findIndex(eventN => eventN.eventName === eventName);
-    //finding the event obj index in the event obj array
-    array.splice(eventIndex, 1);
-    //removing 1 element starting from eventIndex #
+        const eventIndex = array.findIndex(eventN => eventN.eventId === eventId);
+        //finding the event obj index in the event obj array
+        if(userIndex > -1){
+        //if userId exist
+            array.splice(eventIndex, 1);
+            //removing 1 element starting from eventIndex #
+        }
     }
 
     findEventsByDate(date){
@@ -123,4 +131,6 @@ Want List:
 // console.log(eventR.findEventsbyCategory("pop"));
 
 
-module.exports = { EventRecommender, User, Event};
+if (typeof module != 'undefined'){
+    module.exports = { EventRecommender, User,  Event} 
+}
