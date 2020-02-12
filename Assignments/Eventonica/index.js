@@ -1,7 +1,7 @@
 class User{
-    constructor(userId, user){
-        this.userId =userId;
-        this.user = user;
+    constructor(userName, userPass){
+        this.userName = userName;
+        this.userPass = userPass;
         this.userEvents = [];
     }
 }
@@ -32,27 +32,32 @@ class EventRecommender {
         //adding the new event obj into the event array
     }
 
-    addUser(userId, userName) {
+    addUser(userName, userPass) {
     // Adds a new User to the System
-        const userObj = new User(userId, userName);
+        const userObj = new User(userName, userPass);
         //create new user obj using user class
         this.AllUsers.push(userObj);
         //adding new user obj to user array
     }
 
-    saveUserEvent(userId, eventId){
+    saveUserEvent(userName, eventId){
     // Allow users to save events to a personal Events array.
         const eventToAdd = this.AllEvents.find(eventN => eventN.eventId === eventId);
         //finding the event obj in the event array and storing it into a variable
-        const userIndex = this.AllUsers.findIndex(userN => userN.userId === userId);
+        const userIndex = this.AllUsers.findIndex(userN => userN.userName === userName);
         //finding the user's obj index in the users obj array 
         this.AllUsers[userIndex].userEvents.push(eventToAdd);
         //pushing the event obj into the user's obj's event array by using the found index of the user's obj in AllUsers array
     }
 
-    deleteUser(userId) {
+    deleteUser(userName) {
     // Deletes a User from the system
-        const userIndex = this.AllUsers.findIndex(userN => userN.userId === userId);
+        let userIndex = "";
+        for(let i=0; i<this.AllUsers.length;i++){
+            if(this.AllUsers[i].userName === userName){
+                userIndex = i;
+            }
+        }
         //finding the user's obj index in the user obj array
         if(userIndex > -1){
         //if userId exist
@@ -103,13 +108,43 @@ class EventRecommender {
         }
         return availableEvents;
     }
+
+    findUserDuplication(inputUN){
+        console.log(`inputUN ${inputUN}`);
+        for(let i=0;i<this.AllUsers.length;i++){
+            console.log(`allUsers ${this.AllUsers[i].userName}`);
+            if(this.AllUsers[i].userName === inputUN){
+                return true;
+            }
+        }
+    }
+
+    findEventIdDuplication(inputEventId){
+        for(let i=0;i<this.AllEvents.length;i++){
+            if(this.AllEvents[i].eventId === inputEventId){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    findEventNameDuplication(inputEventId){
+        for(let i=0;i<this.AllEvents.length;i++){
+            if(this.AllEvents[i].eventName === inputEventId){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
 }
 
 /*
 Want List:
     1. Find events by Date and Category
-    2. Delete duplicate events
-    3. Username has to be unique (to avoid duplication and adding events/user deletion complications)
+    Done 2. Delete duplicate events
+    Done 3. Username has to be unique (to avoid duplication and adding events/user deletion complications)
 */
 
 // const eventR = new EventRecommender();

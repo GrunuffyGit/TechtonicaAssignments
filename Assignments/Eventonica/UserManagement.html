@@ -16,11 +16,12 @@
         </ul>
         <h3>Add User</h3>
         <form id="add-user">
-            <label>User ID:</label>
-            <input type="text" id="add-user-id">
-            <br/>
-            <label>User name:</label>
+            <label>User Name:</label>
             <input type="text" id="add-user-name">
+            <br/>
+            <label>User Password:</label>
+            <input type="text" id="add-user-pass">
+            <div id="user-add-errorMsg"></div>
             <br/>
             <button type="submit">Add User</button>
         </form>
@@ -28,9 +29,9 @@
     <div>
         <h3>Delete User</h3>
         <form id="delete-user">
-            <label>User ID:</label>
-            <input type="text" id="delete-user-id">
-            <br/>
+            <label>User Name:</label>
+            <input type="text" id="delete-user-name">
+            <div id="user-delete-errorMsg"></div>
             <button type="submit">Delete User</button>
         </form>
     </div>
