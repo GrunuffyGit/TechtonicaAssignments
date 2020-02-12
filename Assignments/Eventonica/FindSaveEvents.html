@@ -14,8 +14,8 @@
         <h3>Find Events by Date</h3>
         <form id="date-search">
             <label>Event date:</label>
-            <input type="text" id="date-input">
-            <br/>
+            <input type="date" id="date-input">
+            <div id="date-search-errorMsg"></div>
             <button type="submit">Search Dates</button>
         </form>
         <h4>Results:</h4>
@@ -27,7 +27,7 @@
         <form id="category-search">
             <label>Event category:</label>
             <input type="text" id="category-input">
-            <br/>
+            <div id="category-search-errorMsg"></div>
             <button type="submit">Search Category</button>
         </form>
         <h4>Results:</h4>
@@ -38,15 +38,15 @@
         <h3>Save Event for User</h3>
         <form id="save-user-event">
             <label>User ID:</label>
-            <input type="text" id="save-user-id">
+            <input type="text" id="save-user-name">
             <br/>
             <label>Event ID:</label>
             <input type="text" id="save-event-id">
-            <br/>
+            <div id="save-errorMsg"></div>
             <button type="submit">Save Event</button>
         </form>
-        <h4>Results:</h4>
-        <ul id="user-save-results">
+        <h4>User Saved Events:</h4>
+        <ul id="user-saved-events">
         </ul>
     </div>
 </body>
