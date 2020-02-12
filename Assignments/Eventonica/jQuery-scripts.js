@@ -8,14 +8,14 @@ $(document).ready( () => {
 
     //User Management
     $("#all-users").html(showAllUsers(eR.AllUsers));
+    
     $("#add-user").submit(function(event){
         event.preventDefault();//prevent reload on submit
         let userName = $("#add-user-name").val();//grabbing UN from input
-        console.log("userName "+userName);
         let userPass = $("#add-user-pass").val();//grabbing UP from input
         if(userName.length !== 0 && userPass.length !== 0){ //find if there are no empty inputs
             if(eR.findUserDuplication(userName) === true){ //find if user already exists or not
-                $("#user-add-errorMsg").html("Username has been taken. Please choose another.");
+                $("#user-add-errorMsg").html("Username already exists. Please choose another.");
             }else{
                 $("#user-add-errorMsg").html("");//clear any error msg
                 eR.addUser(userName, userPass); //adding user
@@ -24,9 +24,10 @@ $(document).ready( () => {
                 //location.reload();
             }
         }else{
-            $("#user-add-errorMsg").html("Please fill out all fields!");
+            $("#user-add-errorMsg").html("Please fill out all field(s)!");
         } 
     });
+    
     $("#delete-user").submit(function(event){
         event.preventDefault();//prevent reload on submit
         let userName = $("#delete-user-name").val();//grabbing UN to delete from input
@@ -35,29 +36,60 @@ $(document).ready( () => {
         setLocalStorage("Users",eR.AllUsers, "delete");//storing updated array into local storage
         $("#all-users").html(showAllUsers(eR.AllUsers));//show updated list of users
         }else{
-            $("#user-delete-errorMsg").html("Please fill out all fields!");
+            $("#user-delete-errorMsg").html("Please fill out all field(s)!");
         }
         
     });
 
     //Event Management
     $("#all-events").html(showAllEvents(eR.AllEvents));
+    
+    let todayDate = new Date();
+    let mm = todayDate.getMonth() + 1;//getting month add 1 because Jan is 0
+    if(mm<10){ //formatting month if <10
+        mm = "0" + mm;
+    }
+    let dd = todayDate.getDate();//getting date
+    if(dd<10){//formatting date if <10
+        dd = "0" + dd;
+    }
+    let yyyy = todayDate.getFullYear(); //getting year
+    $("#add-event-date").attr("min", `${yyyy}-${mm}-${dd}`);//setting min date to enter(today's date)
+    $("#add-event-date").attr("max", `${yyyy+1}-${mm}-${dd}`);//setting max date to enter(a year after today's date)
+    
     $("#add-event").submit(function(event){
+        $("#event-add-errorMsg").html("");
         event.preventDefault();
-        let eventId = $("#add-event-id").val();
-        let eventCategory = $("#add-event-category").val();
-        let eventName = $("#add-event-name").val();
-        let eventTime = $("#add-event-date").val();
-        eR.addEvent(eventId, eventCategory, eventName, eventTime);
-        setLocalStorage("Events",eR.AllEvents, "add");
-        $("#all-events").html(showAllEvents(eR.AllEvents));
+        let eventId = $("#add-event-id").val();//grab event id
+        let eventCategory = $("#add-event-category").val();//grab category id
+        let eventName = $("#add-event-name").val();//grab event name
+        let eventTime = $("#add-event-date").val();//grab event date
+        if(eventId.length !== 0 && eventCategory.length !== 0 && eventName !== 0 && eventTime !== 0){ //find if there's no empty inputs
+            if(eR.findEventIdDuplication(eventId) === true){//find if there is an id duplication
+                $("#event-add-errorMsg").html("Id already exists. Please choose another.");
+            }else if(eR.findEventNameDuplication(eventName) === true){//find if there is a name duplication
+                $("#event-add-errorMsg").html("Name already exists. Please choose another.");
+            }else{
+                eR.addEvent(eventId, eventCategory, eventName, eventTime);//add event
+                setLocalStorage("Events",eR.AllEvents, "add");//storing data into local storage
+                $("#all-events").html(showAllEvents(eR.AllEvents));//show updated list of events
+            }
+        }else{
+            $("#event-add-errorMsg").html("Please fill out all field(s)!");
+        }
+       
     });
+    
     $("#delete-event").submit(function(event){
-        event.preventDefault();
-        let eventId = $("#delete-event-id").val();
-        eR.deleteEvent(eR.AllEvents,eventId);
-        setLocalStorage("Events",eR.AllEvents, "delete");
-        $("#all-events").html(showAllEvents(eR.AllEvents));
+        event.preventDefault();//prevent reload on submit
+        let eventId = $("#delete-event-id").val();//grab event id
+        if(eventId.length !== 0){//find if input is not empty
+            eR.deleteEvent(eventId);//delete event
+            setLocalStorage("Events",eR.AllEvents, "delete");//storing updated array into local storage
+            $("#all-events").html(showAllEvents(eR.AllEvents));//show updated list of events
+        }else{
+            $("#event-delete-errorMsg").html("Please fill out all field(s)!");
+        }
     });
 
     //Find and Save
@@ -66,11 +98,13 @@ $(document).ready( () => {
         let date = $("#date-input").val();
         $("#date-search-results").html(showAllEvents(eR.findEventsByDate(date)));
     });
+    
     $("#category-search").submit(function(event){
         event.preventDefault();
         let category = $("#category-input").val();
         $("#category-search-results").html(showAllEvents(eR.findEventsbyCategory(category)));
     });
+    
     $("#category-search").submit(function(event){
         event.preventDefault();
         let userId = $("#save-user-id").val();

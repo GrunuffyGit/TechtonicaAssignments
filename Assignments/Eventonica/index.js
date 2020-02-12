@@ -52,12 +52,13 @@ class EventRecommender {
 
     deleteUser(userName) {
     // Deletes a User from the system
-        let userIndex = "";
-        for(let i=0; i<this.AllUsers.length;i++){
-            if(this.AllUsers[i].userName === userName){
-                userIndex = i;
-            }
-        }
+        let userIndex = this.AllUsers.findIndex(userN => userN.userName === userName);
+            // let userIndex = "";
+            // for(let i=0; i<this.AllUsers.length;i++){
+            //     if(this.AllUsers[i].userName === userName){
+            //         userIndex = i;
+            //     }
+            // }
         //finding the user's obj index in the user obj array
         if(userIndex > -1){
         //if userId exist
@@ -66,13 +67,13 @@ class EventRecommender {
         }
     }
    
-    deleteEvent(array,eventId) {
+    deleteEvent(eventId) {
     // Deletes the Event from any event array
-        const eventIndex = array.findIndex(eventN => eventN.eventId === eventId);
+        let eventIndex = this.AllEvents.findIndex(eventN => eventN.eventId === eventId);
         //finding the event obj index in the event obj array
-        if(userIndex > -1){
+        if(eventIndex > -1){
         //if userId exist
-            array.splice(eventIndex, 1);
+        this.AllEvents.splice(eventIndex, 1);
             //removing 1 element starting from eventIndex #
         }
     }
@@ -110,31 +111,34 @@ class EventRecommender {
     }
 
     findUserDuplication(inputUN){
-        console.log(`inputUN ${inputUN}`);
+    //find username duplication
         for(let i=0;i<this.AllUsers.length;i++){
-            console.log(`allUsers ${this.AllUsers[i].userName}`);
+        //looping through array of all users
             if(this.AllUsers[i].userName === inputUN){
+            //find if there is a match with user input and existing data
                 return true;
             }
         }
     }
 
     findEventIdDuplication(inputEventId){
+    //find event id duplication
         for(let i=0;i<this.AllEvents.length;i++){
+        //loop through array of all events
             if(this.AllEvents[i].eventId === inputEventId){
+            //find if there is a match with user input and existing data
                 return true;
-            }else{
-                return false;
             }
         }
     }
 
-    findEventNameDuplication(inputEventId){
+    findEventNameDuplication(inputEventName){
+    //find event name dplication
         for(let i=0;i<this.AllEvents.length;i++){
-            if(this.AllEvents[i].eventName === inputEventId){
+        //loop through array of all events
+            if(this.AllEvents[i].eventName === inputEventName){
+            //find if there is a match with user input and existing data
                 return true;
-            }else{
-                return false;
             }
         }
     }
