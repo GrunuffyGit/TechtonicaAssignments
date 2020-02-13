@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="jQuery-scripts.js"></script>
+</head>
+<body>
+    <a href="index.html">Home</a>
+    <a class="link" href="UserManagement.html">Accounts Management</a>
+    <a class="link" href="EventManagement.html">Event Management</a>
+    <a class="link" href="FindSaveEvents.html">Find & Add Events</a>
+    <a href="UserAccount.html">User Account</a>
+    <h1>User Account</h1>
+    <div id ="login">
+        <h3>User Log In</h3>
+        <form id="user-login">
+            <label>User Name:</label>
+            <input type="text" id="user-name">
+            <br/>
+            <label>User Password:</label>
+            <input type="text" id="user-pass">
+            <div id="user-login-errorMsg"></div>
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+    <div id="logout">
+        <form id="user-logout">
+            <label>Log Out User</label>
+            <button type="submit">Log Out</button>
+        </form>
+    </div>
+    <div id="user-logged"></div>
+    <div id = "user-data"></div>
+    <div id = "manage-user-events">
+        <h3>Delete User Event's</h3>
+        <form id="delete-user-event">
+            <input type="text" id="delete-user-event-id">
+            <div id="delete-user-errorMsg"></div>
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+        
+</body>
+</html>

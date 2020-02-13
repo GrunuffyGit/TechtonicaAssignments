@@ -5,6 +5,17 @@ $(document).ready( () => {
     console.log(eR.AllEvents);
         eR.AllUsers = getLocalStorage("Users");
     console.log(eR.AllUsers);
+        let currentUser = getLocalStorage("currentUser");
+    console.log(currentUser);
+
+    //Home
+    if(currentUser.length === 0){
+        $("#user-welcome").html("Hello! Please Log In.");
+        $(".link").hide();
+    }else{
+        $(".link").show();
+        $("#user-welcome").html(`Welcome ${currentUser[0].userName}!`);
+    }
 
     //User Management
     $("#all-users").html(showAllUsers(eR.AllUsers));
@@ -114,8 +125,74 @@ $(document).ready( () => {
         let eventId = $("#save-event-id").val();//grab event Id
         eR.saveUserEvent(userName, eventId);//saving event to user
         setLocalStorage("Users",eR.AllUsers, "User Update");//update local storage
-        $("#user-saved-events").html(`${userName}: <ul>${showAllEvents(eR.findUserData(userName))}</ul>`);//display user data
+        let userData = eR.findUserData(userName);
+        if(userName.toUpperCase() === currentUser[0].userName.toUpperCase()){
+            currentUser = userData;
+            setLocalStorage("currentUser",userData,"update");
+        }
+        $("#user-saved-events").html(`${userName}: <ul>${showAllEvents(userData[0].userEvents)}</ul>`);//display user data
     });
+
+    //User Account Management
+    if(currentUser.length === 0){
+        $("#manage-user-events").hide();
+        $("#logout").hide(); 
+    }else{
+        $("#login").hide();
+        $("#logout").show();
+        $("#user-data").html(`<h4>Hello ${currentUser[0].userName}!</h4><ul>${showAllEvents(currentUser[0].userEvents)}</ul>`);//print userdata
+            if(currentUser[0].userEvents.length>0){
+                $("#manage-user-events").show();
+            }else{
+                $("#manage-user-events").hide();
+            }
+    }
+    
+
+    $("#user-login").submit(function(event){
+        $("#user-login-errorMsg").html("");
+        event.preventDefault();//prevent reload on submit
+        let UN = $("#user-name").val();
+        let Pass = $("#user-pass").val();
+        if(UN.length !== 0 && Pass.length !== 0){//no empty input
+            let userData = eR.findUserData(UN);
+            if(userData.length !== 0){//seeing if user exists in array
+                if(userData[0].userPass === Pass){//checking if password match
+                    setLocalStorage("currentUser",userData,"add");//add current user to local storage
+                    $("#login").hide();//hide login
+                    $(".link").show();//show all links
+                    $("#logout").show();//show log out
+                    $("#user-data").html(`<h4>Hello ${userData[0].userName}!</h4><ul>${showAllEvents(userData[0].userEvents)}</ul>`);//print userdata
+                    if(userData[0].userEvents.length>0){
+                        $("#manage-user-events").show();
+                    }
+                }else{//if password doesn't match
+                    $("#user-login-errorMsg").html("Incorrect password");
+                }
+            }else{//if user doesn't exist
+                $("#user-login-errorMsg").html("Please enter a valid username");
+            }
+        }else{//if no input
+            $("#user-login-errorMsg").html("Please fill out all field(s)!");
+        }
+    });
+
+    $("#user-logout").submit(function(event){
+        currentUser = [];
+        setLocalStorage("currentUser", currentUser, "delete");
+    });
+
+    $("#delete-user-event").submit(function(event){
+        event.preventDefault();//prevent reload on submit
+        let eventId = $("#delete-user-event-id").val();//grab event id to delete
+        eR.deleteEvent(currentUser[0].userEvents, eventId);//delete current's user event
+        setLocalStorage("currentUser",currentUser,"delete");//replace local storage current user data
+        let userIndex = eR.AllUsers.findIndex(userN => userN.userName.toUpperCase() === currentUser[0].userName.toUpperCase());//get index of current user
+        eR.AllUsers[userIndex].userEvents = currentUser[0].userEvents; //replace AllUser's data of logged in user with current user variable
+        setLocalStorage("Users",eR.AllUsers, "User Update");//replace updated AllUser array to local storage
+        $("#user-data").html(`<h4>Hello ${currentUser[0].userName}!</h4><ul>${showAllEvents(currentUser[0].userEvents)}</ul>`);//print userdata
+    });
+
     console.log(localStorage);
 });
 
@@ -153,7 +230,7 @@ function setLocalStorage(string, arrayObj, addOrDelete){
         if(localStorage.getItem(string) !== null){ //if local storage is not null
             let currentLS = JSON.parse(localStorage.getItem(string));//grab current local storage (JSON.parse is to turn local storage back into JSON)
             currentLS = currentLS.concat(arrayObj[arrayObj.length -1]);//combine current local storage array with last element added to the array 
-            localStorage.setItem(string, JSON.stringify(currentLS));//setting the local storage to the combined array (JSON.stringigy is to turn obj array into a string because local storage stores it as a string)
+            localStorage.setItem(string, JSON.stringify(currentLS));//setting the local storage to the combined array (JSON.stringify is to turn obj array into a string because local storage stores it as a string)
         }else{//if local storage is empty
            localStorage.setItem(string, JSON.stringify(arrayObj));//add array to local storage
         }

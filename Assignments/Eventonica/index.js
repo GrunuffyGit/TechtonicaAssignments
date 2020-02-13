@@ -53,7 +53,7 @@ class EventRecommender {
     deleteUser(userName) {
     // Deletes a User from the system
     userName = userName.toUpperCase();
-        let userIndex = this.AllUsers.findIndex(userN => userN.userName === userName);
+        let userIndex = this.AllUsers.findIndex(userN => userN.userName.toUpperCase() === userName);
             // let userIndex = "";
             // for(let i=0; i<this.AllUsers.length;i++){
             //     if(this.AllUsers[i].userName === userName){
@@ -120,10 +120,10 @@ class EventRecommender {
         for(let i=0;i<this.AllUsers.length;i++){
         //looping through array of all users
             if(this.AllUsers[i].userName.toUpperCase() === username){
-                return userData = this.AllUsers[i].userEvents;
+                userData.push(this.AllUsers[i]);
             }
         }
-
+        return userData;
     }
 
     findUserDuplication(inputUN){
