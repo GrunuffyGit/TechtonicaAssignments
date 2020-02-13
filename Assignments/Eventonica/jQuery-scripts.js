@@ -32,7 +32,6 @@ $(document).ready( () => {
                 eR.addUser(userName, userPass); //adding user
                 setLocalStorage("Users",eR.AllUsers, "add"); //storing the new user in local sotrage
                 $("#all-users").html(showAllUsers(eR.AllUsers)); //reshow the new users
-                //location.reload();
             }
         }else{
             $("#user-add-errorMsg").html("Please fill out all field(s)!");
@@ -159,13 +158,7 @@ $(document).ready( () => {
             if(userData.length !== 0){//seeing if user exists in array
                 if(userData[0].userPass === Pass){//checking if password match
                     setLocalStorage("currentUser",userData,"add");//add current user to local storage
-                    $("#login").hide();//hide login
-                    $(".link").show();//show all links
-                    $("#logout").show();//show log out
-                    $("#user-data").html(`<h4>Hello ${userData[0].userName}!</h4><ul>${showAllEvents(userData[0].userEvents)}</ul>`);//print userdata
-                    if(userData[0].userEvents.length>0){
-                        $("#manage-user-events").show();
-                    }
+                    location.reload();
                 }else{//if password doesn't match
                     $("#user-login-errorMsg").html("Incorrect password");
                 }
