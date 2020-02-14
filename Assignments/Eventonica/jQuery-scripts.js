@@ -7,186 +7,33 @@ $(document).ready( () => {
     console.log(eR.AllUsers);
         let currentUser = getLocalStorage("currentUser");
     console.log(currentUser);
-
+    console.log(localStorage);
     //Home
-    if(currentUser.length === 0){
-        $("#user-welcome").html("Hello! Please Log In.");
-        $(".link").hide();
-    }else{
-        $(".link").show();
-        $("#user-welcome").html(`Welcome ${currentUser[0].userName}!`);
-    }
+    loadHome(currentUser);
 
     //User Management
     $("#all-users").html(showAllUsers(eR.AllUsers));
-
-    $("#add-user").submit(function(event){
-        event.preventDefault();//prevent reload on submit
-        let userName = $("#add-user-name").val();//grabbing UN from input
-        let userPass = $("#add-user-pass").val();//grabbing UP from input
-        if(userName.length !== 0 && userPass.length !== 0){ //find if there are no empty inputs
-            if(eR.findUserDuplication(userName) === true){ //find if user already exists or not
-                $("#user-add-errorMsg").html("Username already exists. Please choose another.");
-            }else{
-                $("#user-add-errorMsg").html("");//clear any error msg
-                eR.addUser(userName, userPass); //adding user
-                setLocalStorage("Users",eR.AllUsers, "add"); //storing the new user in local sotrage
-                $("#all-users").html(showAllUsers(eR.AllUsers)); //reshow the new users
-            }
-        }else{
-            $("#user-add-errorMsg").html("Please fill out all field(s)!");
-        } 
-    });
-    
-    $("#delete-user").submit(function(event){
-        event.preventDefault();//prevent reload on submit
-        let userName = $("#delete-user-name").val();//grabbing UN to delete from input
-        if(userName.length !==0){//prevent empty input
-           eR.deleteUser(userName);//delete the user
-        setLocalStorage("Users",eR.AllUsers, "delete");//storing updated array into local storage
-        $("#all-users").html(showAllUsers(eR.AllUsers));//show updated list of users
-        }else{
-            $("#user-delete-errorMsg").html("Please fill out all field(s)!");
-        }
-        
-    });
+    $("#add-user").submit(function(event){addAndStoreUsers(event)});
+    $("#delete-user").submit(function(event){deleteUsersAndUpdateStorage(event)});
 
     //Event Management
     $("#all-events").html(showAllEvents(eR.AllEvents));
-    
     setMinMaxDate("#add-event-date");//setting Min and Max input for Date 
-
-    $("#add-event").submit(function(event){
-        $("#event-add-errorMsg").html("");
-        event.preventDefault();
-        let eventId = $("#add-event-id").val();//grab event id
-        let eventCategory = $("#add-event-category").val();//grab category id
-        let eventName = $("#add-event-name").val();//grab event name
-        let eventTime = $("#add-event-date").val();//grab event date
-        if(eventId.length !== 0 && eventCategory.length !== 0 && eventName !== 0 && eventTime !== 0){ //find if there's no empty inputs
-            if(eR.findEventIdDuplication(eventId) === true){//find if there is an id duplication
-                $("#event-add-errorMsg").html("Id already exists. Please choose another.");
-            }else if(eR.findEventNameDuplication(eventName) === true){//find if there is a name duplication
-                $("#event-add-errorMsg").html("Name already exists. Please choose another.");
-            }else{
-                eR.addEvent(eventId, eventCategory, eventName, eventTime);//add event
-                setLocalStorage("Events",eR.AllEvents, "add");//storing data into local storage
-                $("#all-events").html(showAllEvents(eR.AllEvents));//show updated list of events
-            }
-        }else{
-            $("#event-add-errorMsg").html("Please fill out all field(s)!");
-        }
-       
-    });
-    
-    $("#delete-event").submit(function(event){
-        event.preventDefault();//prevent reload on submit
-        let eventId = $("#delete-event-id").val();//grab event id
-        if(eventId.length !== 0){//find if input is not empty
-            eR.deleteEvent(eR.AllEvents, eventId);//delete event
-            setLocalStorage("Events", eR.AllEvents, "delete");//storing updated array into local storage
-            $("#all-events").html(showAllEvents(eR.AllEvents));//show updated list of events
-        }else{
-            $("#event-delete-errorMsg").html("Please fill out all field(s)!");
-        }
-    });
+    $("#add-event").submit(function(event){addAndStoreEvents(event)});
+    $("#delete-event").submit(function(event){deleteEventAndUpdateStorage(event)});
 
     //Find and Save
     setMinMaxDate("#date-input");//setting Min and Max input for Date 
 
-    $("#date-search").submit(function(event){
-        $("#date-search-errorMsg").html("");//clear error msg
-        event.preventDefault();//prevent reload on submit
-        let date = $("#date-input").val();//grab date
-        if(date.length !== 0){//find if input is empty
-            $("#date-search-results").html(showAllEvents(eR.findEventsByDate(date)));//show results
-        }else{//if input date is empty
-            $("#date-search-errorMsg").html("Please fill out all field(s)!");
-        }
-    });
-    
-    $("#category-search").submit(function(event){
-        $("#category-search-errorMsg").html("");//clear error msg
-        event.preventDefault();//prevent reload on submit
-        let category = $("#category-input").val();//grab category
-        if(category.length !== 0){//find if input is empty
-            $("#category-search-results").html(showAllEvents(eR.findEventsbyCategory(category)));
-        }else{//if input is empty
-            $("#category-search-errorMsg").html("Please fill out all field(s)!");
-        }
-    });
-    
-    $("#save-user-event").submit(function(event){
-        $("#user-saved-events").html("");//reset user display
-        $("#save-errorMsg").html("");//reset any error msg
-        event.preventDefault();//prevent reload on submit
-        let userName = $("#save-user-name").val();//grab username
-        let eventId = $("#save-event-id").val();//grab event Id
-        eR.saveUserEvent(userName, eventId);//saving event to user
-        setLocalStorage("Users",eR.AllUsers, "User Update");//update local storage
-        let userData = eR.findUserData(userName);
-        if(userName.toUpperCase() === currentUser[0].userName.toUpperCase()){
-            currentUser = userData;
-            setLocalStorage("currentUser",userData,"update");
-        }
-        $("#user-saved-events").html(`${userName}: <ul>${showAllEvents(userData[0].userEvents)}</ul>`);//display user data
-    });
+    $("#date-search").submit(function(event){searchEventsDateAndShowResults(event)});
+    $("#category-search").submit(function(event){searchEventsCategoryAndShowResults(event)});
+    $("#save-user-event").submit(function(event){saveEventToUserAndUpdateStorage(event, currentUser)});
 
     //User Account Management
-    if(currentUser.length === 0){
-        $("#manage-user-events").hide();
-        $("#logout").hide(); 
-    }else{
-        $("#login").hide();
-        $("#logout").show();
-        $("#user-data").html(`<h4>Hello ${currentUser[0].userName}!</h4><ul>${showAllEvents(currentUser[0].userEvents)}</ul>`);//print userdata
-            if(currentUser[0].userEvents.length>0){
-                $("#manage-user-events").show();
-            }else{
-                $("#manage-user-events").hide();
-            }
-    }
-    
-
-    $("#user-login").submit(function(event){
-        $("#user-login-errorMsg").html("");
-        event.preventDefault();//prevent reload on submit
-        let UN = $("#user-name").val();
-        let Pass = $("#user-pass").val();
-        if(UN.length !== 0 && Pass.length !== 0){//no empty input
-            let userData = eR.findUserData(UN);
-            if(userData.length !== 0){//seeing if user exists in array
-                if(userData[0].userPass === Pass){//checking if password match
-                    setLocalStorage("currentUser",userData,"add");//add current user to local storage
-                    location.reload();
-                }else{//if password doesn't match
-                    $("#user-login-errorMsg").html("Incorrect password");
-                }
-            }else{//if user doesn't exist
-                $("#user-login-errorMsg").html("Please enter a valid username");
-            }
-        }else{//if no input
-            $("#user-login-errorMsg").html("Please fill out all field(s)!");
-        }
-    });
-
-    $("#user-logout").submit(function(event){
-        currentUser = [];
-        setLocalStorage("currentUser", currentUser, "delete");
-    });
-
-    $("#delete-user-event").submit(function(event){
-        event.preventDefault();//prevent reload on submit
-        let eventId = $("#delete-user-event-id").val();//grab event id to delete
-        eR.deleteEvent(currentUser[0].userEvents, eventId);//delete current's user event
-        setLocalStorage("currentUser",currentUser,"delete");//replace local storage current user data
-        let userIndex = eR.AllUsers.findIndex(userN => userN.userName.toUpperCase() === currentUser[0].userName.toUpperCase());//get index of current user
-        eR.AllUsers[userIndex].userEvents = currentUser[0].userEvents; //replace AllUser's data of logged in user with current user variable
-        setLocalStorage("Users",eR.AllUsers, "User Update");//replace updated AllUser array to local storage
-        $("#user-data").html(`<h4>Hello ${currentUser[0].userName}!</h4><ul>${showAllEvents(currentUser[0].userEvents)}</ul>`);//print userdata
-    });
-
-    console.log(localStorage);
+    setupLoginAndLogoutPage(currentUser);
+    $("#user-login").submit(function(event){loginUser(event)});
+    $("#user-logout").submit(function(){logoutUser(currentUser)});
+    $("#delete-user-event").submit(function(event){deleteUserEventAndUpdateStorage(event, currentUser)});
 });
 
 function showAllUsers(array){
@@ -229,7 +76,7 @@ function setLocalStorage(string, arrayObj, addOrDelete){
         }
     }else{
         localStorage.setItem(string, JSON.stringify(arrayObj)); 
-    }
+    };
 }
 
 function getLocalStorage(string){
@@ -238,7 +85,7 @@ function getLocalStorage(string){
         return JSON.parse(localStorage.getItem(string));//returning obj array of local stoarage (JSON.parse is to turn local storage back into JSON because local storage stores it as a string)
     }else {//if local storage is empty
         return [];//return an empty array
-    }
+    };
 }
 function formatTime(inputDate){
 //returning an obj with time elements to format time
@@ -265,4 +112,175 @@ function setMinMaxDate(inputDateId){
     time = formatTime(time);
     $(`${inputDateId}`).attr("min", `${time.year}-${time.month}-${time.day}`);//setting min date to enter(today's date)
     $(`${inputDateId}`).attr("max", `${time.year+1}-${time.month}-${time.day}`);//setting max date to enter(a year after today's date)
+}
+
+function loadHome(currentUser){
+    if(currentUser.length === 0){
+        $("#user-welcome").html("Hello! Please Log In.");
+        $(".link").hide();
+    }else{
+        $(".link").show();
+        $("#user-welcome").html(`Welcome ${currentUser[0].userName}!`);
+    };
+}
+
+function addAndStoreUsers(event){
+    event.preventDefault();//prevent reload on submit
+    let userName = $("#add-user-name").val();//grabbing UN from input
+    let userPass = $("#add-user-pass").val();//grabbing UP from input
+    if(userName.length !== 0 && userPass.length !== 0){ //find if there are no empty inputs
+        if(eR.findUserDuplication(userName) === true){ //find if user already exists or not
+            $("#user-add-errorMsg").html("Username already exists. Please choose another.");
+        }else{
+            $("#user-add-errorMsg").html("");//clear any error msg
+            eR.addUser(userName, userPass); //adding user
+            setLocalStorage("Users",eR.AllUsers, "add"); //storing the new user in local sotrage
+            $("#all-users").html(showAllUsers(eR.AllUsers)); //reshow the new users
+        }
+    }else{
+        $("#user-add-errorMsg").html("Please fill out all field(s)!");
+    };
+}
+
+function deleteUsersAndUpdateStorage(event){
+    event.preventDefault();//prevent reload on submit
+    let userName = $("#delete-user-name").val();//grabbing UN to delete from input
+    if(userName.length !==0){//prevent empty input
+       eR.deleteUser(userName);//delete the user
+    setLocalStorage("Users",eR.AllUsers, "delete");//storing updated array into local storage
+    $("#all-users").html(showAllUsers(eR.AllUsers));//show updated list of users
+    }else{
+        $("#user-delete-errorMsg").html("Please fill out all field(s)!");
+    };
+}
+
+function addAndStoreEvents(event){
+    $("#event-add-errorMsg").html("");
+    event.preventDefault();
+    let eventId = $("#add-event-id").val();//grab event id
+    let eventCategory = $("#add-event-category").val();//grab category id
+    let eventName = $("#add-event-name").val();//grab event name
+    let eventTime = $("#add-event-date").val();//grab event date
+    if(eventId.length !== 0 && eventCategory.length !== 0 && eventName !== 0 && eventTime !== 0){ //find if there's no empty inputs
+        if(eR.findEventIdDuplication(eventId) === true){//find if there is an id duplication
+             $("#event-add-errorMsg").html("Id already exists. Please choose another.");
+        }else if(eR.findEventNameDuplication(eventName) === true){//find if there is a name duplication
+            $("#event-add-errorMsg").html("Name already exists. Please choose another.");
+        }else{
+            eR.addEvent(eventId, eventCategory, eventName, eventTime);//add event
+            setLocalStorage("Events",eR.AllEvents, "add");//storing data into local storage
+            $("#all-events").html(showAllEvents(eR.AllEvents));//show updated list of events
+        }
+     }else{
+        $("#event-add-errorMsg").html("Please fill out all field(s)!");
+    };
+}
+
+function deleteEventAndUpdateStorage(event){
+    event.preventDefault();//prevent reload on submit
+    let eventId = $("#delete-event-id").val();//grab event id
+    if(eventId.length !== 0){//find if input is not empty
+        eR.deleteEvent(eR.AllEvents, eventId);//delete event
+        setLocalStorage("Events", eR.AllEvents, "delete");//storing updated array into local storage
+        $("#all-events").html(showAllEvents(eR.AllEvents));//show updated list of events
+    }else{
+        $("#event-delete-errorMsg").html("Please fill out all field(s)!");
+    };
+}
+
+function searchEventsDateAndShowResults(event){
+    $("#date-search-errorMsg").html("");//clear error msg
+    event.preventDefault();//prevent reload on submit
+    let date = $("#date-input").val();//grab date
+    if(date.length !== 0){//find if input is empty
+        $("#date-search-results").html(showAllEvents(eR.findEventsByDate(date)));//show results
+    }else{//if input date is empty
+        $("#date-search-errorMsg").html("Please fill out all field(s)!");
+    };
+}
+
+function searchEventsCategoryAndShowResults(event){
+    $("#category-search-errorMsg").html("");//clear error msg
+    event.preventDefault();//prevent reload on submit
+    let category = $("#category-input").val();//grab category
+    if(category.length !== 0){//find if input is empty
+        $("#category-search-results").html(showAllEvents(eR.findEventsbyCategory(category)));
+    }else{//if input is empty
+        $("#category-search-errorMsg").html("Please fill out all field(s)!");
+    }
+}
+
+function saveEventToUserAndUpdateStorage(event, currentUser){
+    $("#user-saved-events").html("");//reset user display
+    $("#save-errorMsg").html("");//reset any error msg
+    event.preventDefault();//prevent reload on submit
+    let userName = $("#save-user-name").val();//grab username
+    let eventId = $("#save-event-id").val();//grab event Id
+    eR.saveUserEvent(userName, eventId);//saving event to user
+    setLocalStorage("Users",eR.AllUsers, "User Update");//update local storage
+    let userData = eR.findUserData(userName);
+    if(userName.toUpperCase() === currentUser[0].userName.toUpperCase()){
+        currentUser = userData;
+        setLocalStorage("currentUser",userData,"update");
+    }
+    $("#user-saved-events").html(`${userName}: <ul>${showAllEvents(userData[0].userEvents)}</ul>`);//display user data
+}
+
+function setupLoginAndLogoutPage(currentUser){
+    if(currentUser.length === 0){
+        $("#manage-user-events").hide();
+        $("#logout").hide(); 
+    }else{
+        $("#login").hide();
+        $("#logout").show();
+        $("#user-data").html(`<h4>Hello ${currentUser[0].userName}!</h4><ul>${showAllEvents(currentUser[0].userEvents)}</ul>`);//print userdata
+            if(currentUser[0].userEvents.length>0){
+                $("#manage-user-events").show();
+            }else{
+                $("#manage-user-events").hide();
+            }
+    };
+}
+
+function loginUser(event){
+    $("#user-login-errorMsg").html("");
+    event.preventDefault();//prevent reload on submit
+    let UN = $("#user-name").val();
+    let Pass = $("#user-pass").val();
+    if(UN.length !== 0 && Pass.length !== 0){//no empty input
+        let userData = eR.findUserData(UN);
+        if(userData.length !== 0){//seeing if user exists in array
+            if(userData[0].userPass === Pass){//checking if password match
+                setLocalStorage("currentUser",userData,"add");//add current user to local storage
+                location.reload();
+            }else{//if password doesn't match
+                $("#user-login-errorMsg").html("Incorrect password");
+            }
+        }else{//if user doesn't exist
+            $("#user-login-errorMsg").html("Please enter a valid username");
+        }
+    }else{//if no input
+        $("#user-login-errorMsg").html("Please fill out all field(s)!");
+    };
+}
+
+function logoutUser(currentUser){
+    currentUser = [];
+    setLocalStorage("currentUser", currentUser, "delete");
+}
+
+function deleteUserEventAndUpdateStorage(event, currentUser){
+    event.preventDefault();//prevent reload on submit
+    let eventId = $("#delete-user-event-id").val();//grab event id to delete
+    eR.deleteEvent(currentUser[0].userEvents, eventId);//delete current's user event
+    setLocalStorage("currentUser",currentUser,"delete");//replace local storage current user data
+    let userIndex = eR.AllUsers.findIndex(userN => userN.userName.toUpperCase() === currentUser[0].userName.toUpperCase());//get index of current user
+    eR.AllUsers[userIndex].userEvents = currentUser[0].userEvents; //replace AllUser's data of logged in user with current user variable
+    setLocalStorage("Users",eR.AllUsers, "User Update");//replace updated AllUser array to local storage
+    $("#user-data").html(`<h4>Hello ${currentUser[0].userName}!</h4><ul>${showAllEvents(currentUser[0].userEvents)}</ul>`);//print userdata
+    if(currentUser[0].userEvents.length>0){
+        $("#manage-user-events").show();
+    }else{
+        $("#manage-user-events").hide();
+    };
 }
