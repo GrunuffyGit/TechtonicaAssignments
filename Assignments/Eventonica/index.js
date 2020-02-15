@@ -187,7 +187,6 @@ Want List:
 // // console.log(eventR.findEventsByDate("May 8, 2020"));
 // console.log(eventR.findEventsbyCategory("pop"));
 
-
 if (typeof module != 'undefined'){
     module.exports = { EventRecommender, User,  Event} 
 }

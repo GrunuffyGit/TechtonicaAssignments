@@ -24,7 +24,6 @@ $(document).ready( () => {
 
     //Find and Save
     setMinMaxDate("#date-input");//setting Min and Max input for Date 
-
     $("#date-search").submit(function(event){searchEventsDateAndShowResults(event)});
     $("#category-search").submit(function(event){searchEventsCategoryAndShowResults(event)});
     $("#save-user-event").submit(function(event){saveEventToUserAndUpdateStorage(event, currentUser)});
@@ -34,6 +33,9 @@ $(document).ready( () => {
     $("#user-login").submit(function(event){loginUser(event)});
     $("#user-logout").submit(function(){logoutUser(currentUser)});
     $("#delete-user-event").submit(function(event){deleteUserEventAndUpdateStorage(event, currentUser)});
+
+    //Ticket Master
+    $("#date-search-tm").submit(function(event){searchTM(event)});
 });
 
 function showAllUsers(array){
@@ -284,3 +286,45 @@ function deleteUserEventAndUpdateStorage(event, currentUser){
         $("#manage-user-events").hide();
     };
 }
+
+function createTM_API_URL(fieldInput, inputValue){
+    const base_URL ="https://app.ticketmaster.com/discovery/v2/events.json?";
+    let end_URL = `&${fieldInput}=${inputValue}&countryCode=US&apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0`;
+    return base_URL+end_URL;
+}
+
+function callAPI(URL, fieldId){
+        $.ajax({
+        type:"GET",
+        url: URL,
+        async:true,
+        dataType: "json",
+        success: function(json) {
+            let arrayOfTMEvents = []
+            json._embedded.events.forEach(element => {
+                let tmEvent = new Event(element.id, element.classifications[0].genre.name, element.name, element.dates.start.localDate)
+                arrayOfTMEvents.push(tmEvent);
+            });
+            setLocalStorage("TM_Arrays", arrayOfTMEvents, "tempStore");
+        },
+        error: function(xhr, status, err) {
+            $(`#${fieldId}-search-errorMsg-tm`).html( `Code: ${status} Oh no! There was an issue with Ticket Master :(`)
+                 }
+      });
+}
+
+function searchTM(event){
+    event.preventDefault();//prevent reload on submit
+    let targetSearch = event.target.id.split("-")[0];//grab field being entered
+    let targetInputVal = $(`#${targetSearch}-input-tm`).val();//grabbing input value
+    let URL_created = "";
+    if(targetSearch === "date"){
+        targetInputVal = new Date(targetInputVal).toISOString();//converting date to UTC time
+        targetInputVal = targetInputVal.slice(0,targetInputVal.length-5)+targetInputVal.slice(targetInputVal.length-1)//reformating to TM format(no millisec)
+        URL_created = createTM_API_URL("startDateTime", targetInputVal);
+    }
+    callAPI(URL_created,targetSearch);
+    console.log(localStorage);
+    
+}
+
