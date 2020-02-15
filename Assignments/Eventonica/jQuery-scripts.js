@@ -298,14 +298,14 @@ function callAPI(URL, fieldId){
         type:"GET",
         url: URL,
         async:true,
-        dataType: "json",
+        dataType: "json", //get data back as json
         success: function(json) {
-            let arrayOfTMEvents = []
-            json._embedded.events.forEach(element => {
-                let tmEvent = new Event(element.id, element.classifications[0].genre.name, element.name, element.dates.start.localDate)
-                arrayOfTMEvents.push(tmEvent);
+            let arrayOfTMEvents = []//creating empty array to put event objs
+            json._embedded.events.forEach(element => { //looping through the json event array
+                let tmEvent = new Event(element.id, element.classifications[0].genre.name, element.name, element.dates.start.localDate)//storing json data in Event obj
+                arrayOfTMEvents.push(tmEvent);//pushing created event obj into array
             });
-            setLocalStorage("TM_Arrays", arrayOfTMEvents, "tempStore");
+            setLocalStorage("TM_Arrays", arrayOfTMEvents, "tempStore");//storing created event obj array in our local storage to get it out of the ajax call since ajax can't return 
         },
         error: function(xhr, status, err) {
             $(`#${fieldId}-search-errorMsg-tm`).html( `Code: ${status} Oh no! There was an issue with Ticket Master :(`)
