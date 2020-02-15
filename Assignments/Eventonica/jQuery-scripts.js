@@ -325,6 +325,8 @@ function searchTM(event){
     }
     callAPI(URL_created,targetSearch);
     console.log(localStorage);
+    let TM_Events = getLocalStorage("TM_Arrays");
+    $(`#${targetSearch}-search-results-tm`).html(`<ul>${showAllEvents(TM_Events)}</ul>`)
     
 }
 
