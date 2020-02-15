@@ -36,6 +36,8 @@ $(document).ready( () => {
 
     //Ticket Master
     $("#date-search-tm").submit(function(event){searchTM(event)});
+    $("#category-search-tm").submit(function(event){searchTM(event)});
+    $("#keyword-search-tm").submit(function(event){searchTM(event)});
 });
 
 function showAllUsers(array){
@@ -313,8 +315,24 @@ function callAPI(URL, fieldId){
       });
 }
 
+function getClassIds(){
+    $.ajax({
+        type:"GET",
+        url:"https://app.ticketmaster.com/discovery/v2/classifications/KZFzniwnSyZfZ7v7nE.json?apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0",
+        async:true,
+        dataType: "json",
+        success: function(json) {
+                    console.log(json);
+                 },
+        error: function(xhr, status, err) {
+                    // This time, we do not end up here!
+                 }
+      });
+}
+
 function searchTM(event){
     event.preventDefault();//prevent reload on submit
+    setLocalStorage("TM_Arrays", [], "cleartmp");
     let targetSearch = event.target.id.split("-")[0];//grab field being entered
     let targetInputVal = $(`#${targetSearch}-input-tm`).val();//grabbing input value
     let URL_created = "";
@@ -322,6 +340,11 @@ function searchTM(event){
         targetInputVal = new Date(targetInputVal).toISOString();//converting date to UTC time
         targetInputVal = targetInputVal.slice(0,targetInputVal.length-5)+targetInputVal.slice(targetInputVal.length-1)//reformating to TM format(no millisec)
         URL_created = createTM_API_URL("startDateTime", targetInputVal);
+    } else if(targetSearch === "category"){
+        getClassIds();
+        URL_created = createTM_API_URL("startDateTime", targetInputVal);
+    }else{
+        URL_created = createTM_API_URL(targetSearch, targetInputVal);
     }
     callAPI(URL_created,targetSearch);
     console.log(localStorage);
