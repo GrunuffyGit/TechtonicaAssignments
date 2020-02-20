@@ -1,0 +1,36 @@
+Exercise 1.
+Imagine you are creating a website to organize your personal recipe collection. You want to be able to:
+
+See the recipe name and description
+Filter by vegetarian or non-vegetarian recipes
+Sort by date added to your collection
+Filter by which meal of the day the recipe is for
+Track how many times you've made each recipe
+Find out which friend gave you this recipe (if any)
+Make a data model for this app, and answer the following questions:
+
+Table: Recipes
+    id  |  name |  description   |   VegOrNot   |  dateAdded   |  day of week | times made |  friend |
+--------+-------+----------------+--------------+--------------+--------------+------------+----------
+integer |  text |     text       |    Boolean   |  date        |   text       |   integer  |   text  |
+
+What is the entity? 
+    Reciepe
+What are the attributes of the entity? 
+    id, name, description, VegOrNot, dateAdded, day of week, friend
+What is the primary key of the entity? 
+    id
+What are the data types of the attributes? 
+    integer, text, text, boolean, date, text, integer, text
+Are there other ways you might model this data?
+    Yes, right now it a logical model but we can remodel it to a physical model which is less readable by non technical people.
+
+
+Exercise 2.
+In your own words, define the following terms:
+
+Entity - table
+Attribute - column
+Data type - type of data
+Primary key - unique id
+Schema - group of related tables in a database
