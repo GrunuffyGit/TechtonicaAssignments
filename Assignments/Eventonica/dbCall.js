@@ -60,7 +60,6 @@ class EventRecommender {
   updateUser = (req, res) => {
     const id = parseInt(req.params.id);
     const {events} = req.body;
-    console.log(events);
     if(events !== '[]'){
       pool.query(
         'UPDATE users SET events = $2 WHERE id = $1 RETURNING *;', [id, JSON.stringify(events)], (error, results) => {
