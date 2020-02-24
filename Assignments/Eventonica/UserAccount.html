@@ -38,34 +38,42 @@
     <div class="gheader jumbotron jumbotron-fluid">
         <h1>User Account</h1>
     </div>
-    <div id ="login">
-        <h3>User Log In</h3>
-        <form id="user-login">
-            <label>User Name:</label>
-            <input type="text" id="user-name">
-            <br/>
-            <label>User Password:</label>
-            <input type="text" id="user-pass">
-            <div id="user-login-errorMsg"></div>
-            <button type="submit">Log In</button>
-        </form>
-    </div>
-    <div id="logout">
-        <form id="user-logout">
-            <label>Log Out User</label>
-            <button type="submit">Log Out</button>
-        </form>
-    </div>
-    <div id="user-logged"></div>
-    <div id="user-data"></div>
-    <div class="manage-user-events">
-        <h3>Delete User Event's</h3>
-        <form id="delete-user-event">
-            <input type="text" id="delete-user-event-id">
-            <div id="delete-user-errorMsg"></div>
-            <button type="submit">Delete</button>
-        </form>
-    </div>
+    <div class="page-content row">
+        <div class="col">
+            <div id ="login">
+                <h3>User Log In</h3>
+                <form id="user-login">
+                    <label>User Name:</label>
+                    <input type="text" id="user-name">
+                    <br/>
+                    <label>User Password:</label>
+                    <input type="text" id="user-pass">
+                    <div id="user-login-errorMsg"></div>
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
+            <div id="user-logged"></div>
+            <div class="manage-user-events">Here are your current events:</div>
+            <div id="user-data"></div>
+        </div>
+        <div class="col">
+            <div class="manage-user-events">
+            <h3>Delete User Event's</h3>
+            <form id="delete-user-event">
+                <label>Event ID:</label>
+                <input type="text" id="delete-user-event-id">
+                <div id="delete-user-errorMsg"></div>
+                <button type="submit">Delete</button>
+            </form>
+            </div>
+            <div id="logout">
+                <form id="user-logout">
+                    <label>Log Out User</label>
+                    <button type="submit">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </div> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>

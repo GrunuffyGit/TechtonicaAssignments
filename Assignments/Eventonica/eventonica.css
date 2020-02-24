@@ -1,5 +1,25 @@
-@import url('https://fonts.googleapis.com/css?family=Delius&display=swap');
+@import url('https://fonts.googleapis.com/css?family=DM+Sans&display=swap');
 
 body{
-    font-family: 'Delius';
+    font-family: 'DM Sans' !important;
+}
+
+.gheader{
+    text-align: center;
+}
+
+.page-content{
+    padding-top: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.row{
+    padding-top: 30px;
+}
+
+.col{
+    text-align: left !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }

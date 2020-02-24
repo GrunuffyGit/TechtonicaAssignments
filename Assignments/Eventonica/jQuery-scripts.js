@@ -313,7 +313,7 @@ function searchEventsDate(event){
     let date = $("#date-input").val();//grab date
     if(date.length !== 0){//find if input is empty
         let findEventByTimeURL = buildDBURL("events") + `date/${date}`;
-        callDB_API("GET", findEventByTimeURL, setupHTMLShowAllEvents, "#date-search-results");
+        callDB_API("GET", findEventByTimeURL, setupHTMLShowAllEvents, "#search-results");
     }else{//if input date is empty
         $("#date-search-errorMsg").html("Please fill out all field(s)!");
     };
@@ -327,7 +327,7 @@ function searchEventsCategory(event){
     category = category.toUpperCase();
     if(category.length !== 0){//find if input is empty
         let findEventByCategoryURL = buildDBURL("events") + `category/${category}`;
-        callDB_API("GET", findEventByCategoryURL, setupHTMLShowAllEvents, "#category-search-results");
+        callDB_API("GET", findEventByCategoryURL, setupHTMLShowAllEvents, "#search-results");
     }else{//if input is empty
         $("#category-search-errorMsg").html("Please fill out all field(s)!");
     }
@@ -381,7 +381,8 @@ function setupLoginAndLogoutPage(currentUser){
     }else{
         $("#login").hide();
         $("#logout").show();
-        $("#user-data").html(`<h4>Hello ${currentUser.name}!</h4><ul id="user-events"></ul>`);//print username
+        $("#user-logged").html(`<h4>Hello ${currentUser.name}!</h4>`);
+        $("#user-data").html(`<ul id="user-events"></ul>`);//print username
         let userEventsURL = buildDBURL("users", currentUser.name)+"events";//building url to find all events belonging to the user
         showAllEvents(userEventsURL, "#user-events");//display all events from the user
             if(currentUser.events.length>0){
@@ -452,7 +453,7 @@ function deleteCurrentUserEvent(event){
     event.preventDefault();//prevent reload on submit
     let eventId = $("#delete-user-event-id").val();//grab event id to delete
     deleteEventFromUser(currentUser.name, eventId);//delete current's user event in db
-    $("#user-data").html(`<h4>Hello ${currentUser.name}!</h4><ul id="user-events"></ul>`);//print username
+    $("#user-data").html(`<ul id="user-events"></ul>`);//print username
     let userEventsURL = buildDBURL("users", currentUser.name)+"events";//find all events belonging to the the user in the db
     showAllEvents(userEventsURL, "#user-events");//display the events
     let findUsersURL = buildDBURL("users", currentUser.name);//building url to find user in db
@@ -516,7 +517,7 @@ function searchTM(event){
     }
     callTMAPI(URL_created, targetSearch);//calling the endpoint with the usrl created
     let TM_Events = getLocalStorage("TM_Array");//grabbing the infomation stored after the call in local storage
-    $(`#${targetSearch}-search-results-tm`).html(`<ul id="TM_Events_Results"></ul>`);//create html where event will de displayed
+    $(`#search-results-tm`).html(`<ul id="TM_Events_Results"></ul>`);//create html where event will de displayed
     setupHTMLShowAllEvents("#TM_Events_Results",TM_Events);//displaying the events
 }
 

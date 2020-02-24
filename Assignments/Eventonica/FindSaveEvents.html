@@ -38,44 +38,47 @@
     <div class="gheader jumbotron jumbotron-fluid">
         <h1>Event Search and Save</h1>
     </div>
-    <div>
-        <h3>Find Events by Date</h3>
-        <form id="date-search">
-            <label>Event date:</label>
-            <input type="date" id="date-input">
-            <div id="date-search-errorMsg"></div>
-            <button type="submit">Search Dates</button>
-        </form>
-        <h4>Results:</h4>
-        <ul id="date-search-results">
-        </ul>
-    </div>
-    <div>
-        <h3>Find Events by Category</h3>
-        <form id="category-search">
-            <label>Event category:</label>
-            <input type="text" id="category-input">
-            <div id="category-search-errorMsg"></div>
-            <button type="submit">Search Category</button>
-        </form>
-        <h4>Results:</h4>
-        <ul id="category-search-results">
-        </ul>
-    </div>
-    <div>
-        <h3>Save Event for User</h3>
-        <form id="save-user-event">
-            <label>User Name:</label>
-            <input type="text" id="save-user-name">
-            <br/>
-            <label>Event ID:</label>
-            <input type="text" id="save-event-id">
-            <div id="save-errorMsg"></div>
-            <button type="submit">Save Event</button>
-        </form>
-        <h4>User Events:</h4>
-        <ul id="user-saved-events">
-        </ul>
+    <div class="page-content row">
+        <div class="col">
+            <h4>Results:</h4>
+            <ul id="search-results">
+            </ul>
+        </div>
+        <div class="col">
+            <div>
+                <h3>Find Events by Date</h3>
+                <form id="date-search">
+                    <label>Event date:</label>
+                    <input type="date" id="date-input">
+                    <div id="date-search-errorMsg"></div>
+                    <button type="submit">Search Dates</button>
+                </form>
+            </div>
+            <div>
+                <h3>Find Events by Category</h3>
+                <form id="category-search">
+                    <label>Event category:</label>
+                    <input type="text" id="category-input">
+                    <div id="category-search-errorMsg"></div>
+                    <button type="submit">Search Category</button>
+                </form>
+            </div>
+            <div>
+                <h3>Save Event for User</h3>
+                <form id="save-user-event">
+                    <label>User Name:</label>
+                    <input type="text" id="save-user-name">
+                    <br/>
+                    <label>Event ID:</label>
+                    <input type="text" id="save-event-id">
+                    <div id="save-errorMsg"></div>
+                    <button type="submit">Save Event</button>
+                </form>
+                <h4>User Events:</h4>
+                <ul id="user-saved-events">
+                </ul>
+            </div>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
