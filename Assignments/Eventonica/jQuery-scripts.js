@@ -376,7 +376,7 @@ function saveEventToUser(event){
 function setupLoginAndLogoutPage(currentUser){
 //set up the login and logout page if there is a user logged in or not
     if(currentUser.length === 0){
-        $("#manage-user-events").hide();
+        $(".manage-user-events").hide();
         $("#logout").hide(); 
     }else{
         $("#login").hide();
@@ -385,9 +385,9 @@ function setupLoginAndLogoutPage(currentUser){
         let userEventsURL = buildDBURL("users", currentUser.name)+"events";//building url to find all events belonging to the user
         showAllEvents(userEventsURL, "#user-events");//display all events from the user
             if(currentUser.events.length>0){
-                $("#manage-user-events").show();
+                $(".manage-user-events").show();
             }else{
-                $("#manage-user-events").hide();
+                $(".manage-user-events").hide();
             }
     };
 }
@@ -458,9 +458,9 @@ function deleteCurrentUserEvent(event){
     let findUsersURL = buildDBURL("users", currentUser.name);//building url to find user in db
     callDB_API("GET", findUsersURL, updateCurrentUser);//getting user info and updating the local storage
     if(currentUser.events.length>0){//if localstorage's event array is less than 0
-        $("#manage-user-events").show();
+        $(".manage-user-events").show();
     }else{
-        $("#manage-user-events").hide();
+        $(".manage-user-events").hide();
     };
 }
 

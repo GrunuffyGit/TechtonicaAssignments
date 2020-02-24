@@ -1,16 +1,43 @@
 <html>
 <head>
+    <link rel="stylesheet" href="eventonica.css"></link> 
+    <script src="CssJavaScript.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="jQuery-scripts.js"></script>
 </head>
 <body>
-    <a href="/">Home</a>
-    <a class="link" href="UserManagement.html">Accounts Management</a>
-    <a class="link" href="EventManagement.html">User-Created Event Management</a>
-    <a class="link" href="FindSaveEvents.html">User Events</a>
-    <a class="link" href="TicketMaster.html">Ticket Master Events</a>
-    <a href="UserAccount.html">User Account</a>
-    <h1>User Account</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Eventonica</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar1">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="UserManagement.html">Accounts Management</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="EventManagement.html">User-Created Event Management</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="FindSaveEvents.html" >User Events</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="TicketMaster.html" >Ticket Master Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="UserAccount.html">User Account</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+    <div class="gheader jumbotron jumbotron-fluid">
+        <h1>User Account</h1>
+    </div>
     <div id ="login">
         <h3>User Log In</h3>
         <form id="user-login">
@@ -30,8 +57,8 @@
         </form>
     </div>
     <div id="user-logged"></div>
-    <div id = "user-data"></div>
-    <div id = "manage-user-events">
+    <div id="user-data"></div>
+    <div class="manage-user-events">
         <h3>Delete User Event's</h3>
         <form id="delete-user-event">
             <input type="text" id="delete-user-event-id">
@@ -39,6 +66,7 @@
             <button type="submit">Delete</button>
         </form>
     </div>
-        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

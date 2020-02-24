@@ -6,6 +6,8 @@ const eR = new db.EventRecommender();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('./'));
+
 app.get('/users', eR.getUsers);
 app.get('/users/:name', eR.getUserByName);
 app.get('/users/:name/events', eR.getUsersEvents);
