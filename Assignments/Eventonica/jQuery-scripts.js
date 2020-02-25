@@ -43,10 +43,10 @@ function buildDBURL(string, paramVal){
         endURL = "users/";
     }else if(string === "events"){
         endURL = "events/";
-    }
+    };
     if(typeof paramVal !== "undefined"){
         endURL += `${paramVal}/`;
-    }
+    };
     return baseURL + endURL;
 }
 
@@ -63,10 +63,10 @@ function callDB_API(callType, URL, callbackfunction, callbackParam){
                     callbackfunction(callbackParam, json);
                 }else{
                     callbackfunction(json);
-                }
-            }
+                };
+            };
         }
-      });
+    });
 }
 
 function sendDB_API(callType, URL, dataToSend, callbackfunction, callbackParam){
@@ -83,10 +83,10 @@ function sendDB_API(callType, URL, dataToSend, callbackfunction, callbackParam){
                     callbackfunction(callbackParam, json);
                 }else{
                     callbackfunction(json);
-                }
-            }
+                };
+            };
         }
-      });
+    });
 }
 
 function setupHTMLShowAllUsers(array){
@@ -98,7 +98,7 @@ function setupHTMLShowAllUsers(array){
         });
     }else{//if there's nothing in array
         html = "There are no users currently." 
-    }
+    };
     $("#all-users").html(html);
 }
 
@@ -115,17 +115,17 @@ function setupHTMLShowAllEvents(location, array){
         if(typeof array[0].events !== "undefined"){//for nested events (when calling for user events)
             $.each(array[0].events, function(index, event) {//looping through array
                 let date = formatTime(event.time);
-                html += `<li>${event.name}<ul><li>Event Id: ${event.id}</li><li>Category: ${event.category}</li><li>Date: ${date.month}/${date.day}/${date.year}</li></ul></li>`;
+                html += `<li class="list-of-events">${event.name}<ul class="event-info"><li>Event Id: ${event.id}</li><li>Category: ${event.category}</li><li>Date: ${date.month}/${date.day}/${date.year}</li></ul></li><br>`;
             });
         }else{//calling general events
             $.each(array, function(index, event) {//looping through array
                 let date = formatTime(event.time);
-                html += `<li>${event.name}<ul><li>Event Id: ${event.id}</li><li>Category: ${event.category}</li><li>Date: ${date.month}/${date.day}/${date.year}</li></ul></li>`;
+                html += `<li class="list-of-events">${event.name}<ul class="event-info"><li>Event Id: ${event.id}</li><li>Category: ${event.category}</li><li>Date: ${date.month}/${date.day}/${date.year}</li></ul></li><br>`;
             });
-        }
+        };
     }else{//if there's nothing in array
         html = "There are no events currently."
-    }
+    };
     $(location).html(html);
 }
 
@@ -153,11 +153,11 @@ function formatTime(inputDate){
     let mm = date.getMonth() + 1;//getting month add 1 because Jan is 0
     if(mm<10){ //formatting month if <10
         mm = "0" + mm;
-    }
+    };
     let dd = date.getDate();//getting date
     if(dd<10){//formatting date if <10
         dd = "0" + dd;
-    }
+    };
     let yyyy = date.getFullYear(); //getting year
     return{
         "year" :yyyy,
@@ -186,8 +186,8 @@ function loadHome(currentUser){
 
 function updateUserEvent(updateEventObj, json){
 //updating the user with new event array
-            let updateUserEventURL = buildDBURL("users", json[0].id); 
-            sendDB_API("PUT", updateUserEventURL, updateEventObj);
+    let updateUserEventURL = buildDBURL("users", json[0].id); 
+    sendDB_API("PUT", updateUserEventURL, updateEventObj);
 }
 
 function updateCurrentUser(json){
@@ -195,7 +195,7 @@ function updateCurrentUser(json){
     userData = {
     "name": json[0].name,
     "events": json[0].events
-    }
+    };
     setLocalStorage("currentUser",userData);
 }
 
@@ -210,17 +210,17 @@ function addUsers(event){
         let userObj = {//creating userobj for callback function to pass as body when posting to api
             "name": userName,
             "password": userPass
-        }
+        };
         function findUserDuplication(dataJson){
-            //checking results of searching the db if username is already taken
-                if(dataJson.length !== 0){ //if user already exists or not
-                    $("#user-add-errorMsg").html("Username already exists. Please choose another.");
-                }else{//if username is not taken
-                    $("#user-add-errorMsg").html("");//clear any error msg
-                    let createUserURL = buildDBURL("users");//building url to hit to create a user
-                    sendDB_API("POST", createUserURL, userObj);//posting to the endpoint passing the userobj to build json body
-                }
-        }
+        //checking results of searching the db if username is already taken
+            if(dataJson.length !== 0){ //if user already exists or not
+                $("#user-add-errorMsg").html("Username already exists. Please choose another.");
+            }else{//if username is not taken
+                $("#user-add-errorMsg").html("");//clear any error msg
+                let createUserURL = buildDBURL("users");//building url to hit to create a user
+                sendDB_API("POST", createUserURL, userObj);//posting to the endpoint passing the userobj to build json body
+            };
+        };
         let findUserURL = buildDBURL("users", userName); //building url to search the db
         callDB_API("GET", findUserURL, findUserDuplication);//searching the db and passing findUserDuplication as callback func
         showAllUsers();
@@ -239,7 +239,7 @@ function deleteUsers(event){
         //deleting user after finding user id
             let userIDToDeleteURL = buildDBURL("users", json[0].id);//building url to delete user using user id
             callDB_API("DELETE", userIDToDeleteURL);
-        }
+        };
         let findUserURL = buildDBURL("users", userName);//building url to search for user using username
         callDB_API("GET", findUserURL, deleteUserWithId);
         showAllUsers();//show updated list of users
@@ -263,22 +263,22 @@ function addEvents(event){
             "name": eventName,
             "category": eventCategory,
             "time": eventTime
-        }
+        };
         function findEventDuplication(dataJson){
         //find event name dplication
-                if(dataJson.length !== 0){ //find if event already exists or not
-                    $("#event-add-errorMsg").html("Event name already exists. Please choose another.");
-                }else{
-                    $("#event-add-errorMsg").html("");//clear any error msg
-                    let createEventURL = buildDBURL("events");
-                    sendDB_API("POST", createEventURL, eventObj);
-                }
-        }
+            if(dataJson.length !== 0){ //find if event already exists or not
+                $("#event-add-errorMsg").html("Event name already exists. Please choose another.");
+            }else{
+                $("#event-add-errorMsg").html("");//clear any error msg
+                let createEventURL = buildDBURL("events");
+                sendDB_API("POST", createEventURL, eventObj);
+            };
+        };
         let findEventURL = buildDBURL("events", eventName);//building url to seach db for event
         callDB_API("GET", findEventURL, findEventDuplication);//searching db if there is event with the name
         let getEventsURL = buildDBURL("events");//search all events in db
         showAllEvents(getEventsURL, "#all-events");//displaying what is in the db for events
-     }else{
+    }else{
         $("#event-add-errorMsg").html("Please fill out all field(s)!");
     };
 }
@@ -298,8 +298,8 @@ function deleteEvent(event){
         //deleting deleted event from all users
             for(i=0; i<json.length; i++){//looping through all the array of users containing the event
                 deleteEventFromUser(json[i].name, eventId);//delete or "updating" user's array
-            }
-        }
+            };
+        };
     }else{
         $("#event-delete-errorMsg").html("Please fill out all field(s)!");
     };
@@ -329,7 +329,7 @@ function searchEventsCategory(event){
         callDB_API("GET", findEventByCategoryURL, setupHTMLShowAllEvents, "#search-results");
     }else{//if input is empty
         $("#category-search-errorMsg").html("Please fill out all field(s)!");
-    }
+    };
 }
 
 function saveEventToUser(event){
@@ -346,7 +346,7 @@ function saveEventToUser(event){
     //finding the user id to save the event to
         let findUserEventsURL = buildDBURL("users", userName);
         callDB_API("GET",findUserEventsURL, saveUserEvent, eventJson);
-    }
+    };
     function saveUserEvent(eventJson, userJson){
     //saving the event to the user's event array
         if(userJson[0].events.findIndex(obj => obj.id === eventId.toString())=== -1){//seeing if event already exists inside of user event array
@@ -355,7 +355,7 @@ function saveEventToUser(event){
             userEventArray.push(eventJson[0]);//pushing new event into the user event array
             let eventObj = {//creating obj to post to the endpoint
                 "events": userEventArray
-            }
+            };
             updateUserEvent(eventObj, userJson);//PUT to the db updating user's event array
             let userEventsURL = buildDBURL("users", userName)+"events";//building url to serch for user
             $("#user-saved-events").html(`${userName}: <ul id="user-saved-event-list"></ul>`);//display user data
@@ -363,10 +363,10 @@ function saveEventToUser(event){
             if(userName === currentUser.name){//if updating user is the logged in user, update the local storage
                 let findUsersURL = buildDBURL("users", userName);
                 callDB_API("GET", findUsersURL, updateCurrentUser);
-            }
+            };
         }else{
             $("#save-errorMsg").html("User already have the event saved!");
-        }
+        };
     }
     let findEventURL = buildDBURL("events")+`id/${eventId}`;//build url to search for event
     callDB_API("GET",findEventURL, findUserToSaveEvent);//search for event and passing findUserToSaveEvent as a callback func
@@ -380,15 +380,15 @@ function setupLoginAndLogoutPage(currentUser){
     }else{
         $(".login").hide();
         $("#logout").show();
-        $("#user-logged").html(`<h4>Hello ${currentUser.name}!</h4>`);
+        $("#user-logged").html(`<h2>Hello ${currentUser.name}!</h2>`);
         $("#user-data").html(`<ul id="user-events"></ul>`);//print username
         let userEventsURL = buildDBURL("users", currentUser.name)+"events";//building url to find all events belonging to the user
         showAllEvents(userEventsURL, "#user-events");//display all events from the user
-            if(currentUser.events.length>0){
-                $(".manage-user-events").show();
-            }else{
-                $(".manage-user-events").hide();
-            }
+        if(currentUser.events.length>0){
+            $(".manage-user-events").show();
+        }else{
+            $(".manage-user-events").hide();
+        };
     };
 }
 
@@ -410,11 +410,11 @@ function loginUser(event){
                     location.reload();
                 }else{//if password doesn't match
                     $("#user-login-errorMsg").html("Incorrect password");
-                }
+                };
             }else{//if user doesn't exist
                 $("#user-login-errorMsg").html("Please enter a valid username");
-            }
-        }
+            };
+        };
         let findUsersURL = buildDBURL("users", UN.toUpperCase());//building url to find user
         callDB_API("GET", findUsersURL, checkPassWord);//calling db to find user and passing checkPassword as a callback func
     }else{//if no input
@@ -436,13 +436,13 @@ function deleteEventFromUser(user, eventId){
         let updatedArray = json[0].events.filter(event => {return event.id != eventId});//get new array w/out target event
         if(updatedArray.length === 0){//if the array is empty
             updatedArray = "[]";//pass a empty array string
-        }
+        };
         let eventObj = {//creating event obj to pass for body
             "events": updatedArray
-        }
+        };
         let findUserIDURL = buildDBURL("users", user);//find user id
         callDB_API("GET", findUserIDURL, updateUserEvent, eventObj);//find the userid and pass updateUserEvent as callback func and the eventobj as a param to the callback func
-    }
+    };
     let findUserEventsURL = buildDBURL("users")+`${user}/events/`;//building url to find user's event
     callDB_API("GET",findUserEventsURL, filterOutEvents, eventId);// searching the db for user's event array
 }
@@ -490,12 +490,12 @@ function callTMAPI(URL, fieldId){
                     arrayOfTMEvents.push(tmEvent);//pushing created event obj into array
                 });
                 setLocalStorage("TM_Array", arrayOfTMEvents);//storing created event obj array in our local storage to get it out of the ajax call since ajax can't return 
-            }
+            };
         },
         error: function(xhr, status, err) {
             if(typeof fieldId !== "undefined"){
                 $(`#${fieldId}-search-errorMsg-tm`).html( `Code: ${status} Oh no! There was an issue with Ticket Master :(`)
-            }
+            };
         }
     });
 }
@@ -513,7 +513,7 @@ function searchTM(event){
         URL_created = createTM_API_URL("startDateTime", targetInputVal);
     }else{//if searching using a different parameter
         URL_created = createTM_API_URL(targetSearch, targetInputVal);
-    }
+    };
     callTMAPI(URL_created, targetSearch);//calling the endpoint with the usrl created
     let TM_Events = getLocalStorage("TM_Array");//grabbing the infomation stored after the call in local storage
     $(`#search-results-tm`).html(`<ul id="TM_Events_Results"></ul>`);//create html where event will de displayed
@@ -539,7 +539,7 @@ function saveEventToUserTM(event){
             userEventArray.push(eventJson[0]);//pushing the event into user's eent array
             let eventObj = {//creating obj to post to the endpoint
                 "events": userEventArray
-            }
+            };
             updateUserEvent(eventObj, userJson);//PUT to the db updating user's event array
             let userEventsURL = buildDBURL("users", userName)+"events";//building url to serch for user
             $("#user-saved-events").html(`${userName}: <ul id="user-saved-event-list"></ul>`);//display user data
@@ -547,11 +547,11 @@ function saveEventToUserTM(event){
             if(userName === currentUser.name){//if updating user is the logged in user, update the local storage
                 let findUsersURL = buildDBURL("users", userName);
                 callDB_API("GET", findUsersURL, updateCurrentUser);
-            }
+            };
         }else{
             $("#save-errorMsg").html("User already have the event saved!");
-        }
-    }
+        };
+    };
     let findUserEventsURL = buildDBURL("users", userName);
     callDB_API("GET",findUserEventsURL, saveUserEvent, TM_Searched_Event);
 }

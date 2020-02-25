@@ -6,6 +6,9 @@ body{
 
 .gheader{
     text-align: center;
+    background-color: rgb(216, 238, 238)!important;
+    padding-top: 146px !important;
+    padding-bottom: 90px !important;
 }
 .homepage{
     background: url("eventPic.jpg");
@@ -13,9 +16,20 @@ body{
     background-repeat: no-repeat;
 }
 
+.navbar{
+    width: 100%;
+    padding-left: 80px !important;
+    position: fixed !important;
+    z-index: 1;
+}
+
+.nav-link:hover{
+    color: rgb(173, 173, 173) !important;
+}
+
 .logo{
     padding-top: 13px !important;
-    padding-left: 16px;
+    padding-left: 80px;
 }
 
 .welcome{
@@ -23,7 +37,7 @@ body{
     color: mintcream;
     border-radius: 0px 10px 10px 0px;
     position: relative;
-    top: 40%;
+    top: 45%;
     line-height: 1.8;
 }
 
@@ -31,9 +45,31 @@ body{
     padding-bottom: 20px;
 }
 .page-content{
+    width: 100%;
     padding-top: 30px;
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-left: 80px;
+    padding-right: 80px;
+    animation: fadeInDown 1s;
+}
+
+.col1{
+    padding-left: 50px !important;
+}
+
+ul{
+    padding-left: 0px !important;
+    list-style: none;
+}
+
+li{
+    padding-left: 40px !important;
+}
+
+.list-of-events{
+    border-style: solid;
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #get-started{
@@ -77,6 +113,16 @@ a:hover{
 
 .col{
     text-align: left !important;
-    padding-left: 0px !important;
     padding-right: 0px !important;
+}
+
+@keyframes fadeInDown{
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
