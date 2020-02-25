@@ -177,7 +177,6 @@ function setMinMaxDate(inputDateId){
 function loadHome(currentUser){
 //loading the home page
     if(currentUser.length === 0){//checking if a user is logged in
-        $("#user-welcome").html("Hello! Please Log In.");
         $(".link").hide();
     }else{//if there is a user logged in
         $(".link").show();
@@ -379,7 +378,7 @@ function setupLoginAndLogoutPage(currentUser){
         $(".manage-user-events").hide();
         $("#logout").hide(); 
     }else{
-        $("#login").hide();
+        $(".login").hide();
         $("#logout").show();
         $("#user-logged").html(`<h4>Hello ${currentUser.name}!</h4>`);
         $("#user-data").html(`<ul id="user-events"></ul>`);//print username

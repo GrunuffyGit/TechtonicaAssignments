@@ -7,11 +7,68 @@ body{
 .gheader{
     text-align: center;
 }
+.homepage{
+    background: url("eventPic.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
+.logo{
+    padding-top: 13px !important;
+    padding-left: 16px;
+}
+
+.welcome{
+    text-align: center;
+    color: mintcream;
+    border-radius: 0px 10px 10px 0px;
+    position: relative;
+    top: 40%;
+    line-height: 1.8;
+}
+
+#user-welcome{
+    padding-bottom: 20px;
+}
 .page-content{
     padding-top: 30px;
     padding-left: 60px;
     padding-right: 60px;
+}
+
+#get-started{
+    font-size: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 50px !important;
+    background-color: rgb(51, 109, 184);
+}
+
+button{
+    padding: 10px;
+    border-radius: 20px !important;
+    background-color: rgb(51, 109, 184);
+    color: rgb(251, 251, 251) !important;
+    text-decoration: none;
+    border: none;
+}
+
+button:focus {
+    outline:none !important;
+}
+
+button:hover{
+    background-color: rgb(26, 68, 124);
+}
+
+a{
+    color: rgb(251, 251, 251) !important;
+}
+
+a:hover{
+    text-decoration: none !important;
 }
 
 .row{
