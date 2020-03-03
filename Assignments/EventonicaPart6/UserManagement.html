@@ -1,0 +1,69 @@
+<html>
+<head>
+    <link rel="stylesheet" href="eventonica.css"></link>
+    <script src="CssJavaScript.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="jQuery-scripts.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Eventonica</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar1">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="UserManagement.html">Accounts Management</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="EventManagement.html">User-Created Event Management</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="FindSaveEvents.html" >User Events</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="TicketMaster.html" >Ticket Master Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="UserAccount.html">User Account</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+    <div class="gheader jumbotron jumbotron-fluid">
+        <h1>User Management</h1>
+    </div>
+    <div class="page-content row">
+        <div class="col col1">
+            <h3>All Users</h3>
+            <ul id="all-users"></ul>
+        </div>
+        <div class="col">
+            <h3>Add User</h3>
+            <form id="add-user">
+                <label>User Name:</label>
+                <input type="text" id="add-user-name">
+                <br/>
+                <label>User Password:</label>
+                <input type="text" id="add-user-pass">*case-sensitive*
+                <div id="user-add-errorMsg"></div>
+                <button type="submit">Add User</button>
+            </form>
+            <h3>Delete User</h3>
+            <form id="delete-user">
+                <label>User Name:</label>
+                <input type="text" id="delete-user-name">
+                <div id="user-delete-errorMsg"></div>
+                <button type="submit">Delete User</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

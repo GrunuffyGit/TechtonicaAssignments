@@ -1,0 +1,86 @@
+<html>
+<head>
+    <link rel="stylesheet" href="eventonica.css"></link> 
+    <script src="CssJavaScript.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="jQuery-scripts.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Eventonica</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar1">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="UserManagement.html">Accounts Management</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="EventManagement.html">User-Created Event Management</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="FindSaveEvents.html" >User Events</a>
+            </li>
+            <li class="nav-item manage-user-events">
+                <a class="nav-link" href="TicketMaster.html" >Ticket Master Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="UserAccount.html">User Account</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+    <div class="gheader jumbotron jumbotron-fluid">
+        <h1>Event Search and Save</h1>
+    </div>
+    <div class="page-content row">
+        <div class="col col1">
+            <h4>Events:</h4>
+            <ul id="search-results">
+            </ul>
+        </div>
+        <div class="col">
+            <div>
+                <h3>Find Events by Date</h3>
+                <form id="date-search">
+                    <label>Event date:</label>
+                    <input type="date" id="date-input">
+                    <div id="date-search-errorMsg"></div>
+                    <button type="submit">Search Dates</button>
+                </form>
+            </div>
+            <div>
+                <h3>Find Events by Category</h3>
+                <form id="category-search">
+                    <label>Event category:</label>
+                    <input type="text" id="category-input">
+                    <div id="category-search-errorMsg"></div>
+                    <button type="submit">Search Category</button>
+                </form>
+            </div>
+            <div>
+                <h3>Save Event for User</h3>
+                <form id="save-user-event">
+                    <label>User Name:</label>
+                    <input type="text" id="save-user-name">
+                    <br/>
+                    <label>Event ID:</label>
+                    <input type="text" id="save-event-id">
+                    <div id="save-errorMsg"></div>
+                    <button type="submit">Save Event</button>
+                </form>
+                <h4>User Events:</h4>
+                <ul id="user-saved-events">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
