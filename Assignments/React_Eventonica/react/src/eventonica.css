@@ -11,6 +11,8 @@ body{
     padding-bottom: 90px !important;
 }
 .homepage{
+    width: 100vw;
+    height: 100vh;
     background: url("eventPic.jpg");
     background-size: cover;
     background-repeat: no-repeat;

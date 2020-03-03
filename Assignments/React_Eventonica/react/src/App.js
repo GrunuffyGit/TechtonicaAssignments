@@ -5,7 +5,7 @@ import EventManagement from './Views/EventManagement';
 import FindAndSave from './Views/FindAndSaveEvent';
 import TicketMaster from './Views/Ticketmaster';
 import AccountManagement from './Views/AccountManagement';
-import './App.css';
+import './eventonica.css';
 import {BrowserRouter, Route} from 'react-router-dom';
 
 class App extends React.Component {

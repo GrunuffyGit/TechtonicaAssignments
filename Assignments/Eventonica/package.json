@@ -19,6 +19,11 @@
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^2.0.2",
-    "pg": "^7.18.1"
+    "pg": "^7.18.2"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.0",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }
