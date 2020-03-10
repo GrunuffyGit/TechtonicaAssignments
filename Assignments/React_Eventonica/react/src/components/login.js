@@ -1,26 +1,16 @@
 import React from 'react';
+import * as generalFunc from './generalFunc';
 
 export default class Login extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            "username":'',
-            "password":'',
-            "loggedIn": false
-        };
-        this.storeInputValue = this.storeInputValue.bind(this);
-    }
+    state = {
+        "username":'',
+        "password":'',
+        "errorMsg":''
+    };
 
     storeInputValue(event){
         let target = event.target;
-        this.setState =({
-            [target.id] : target.value 
-        });
-    }
-
-    setLocalStorage(string, arrayObj){
-        //setting the local storage
-            localStorage.setItem(string, JSON.stringify(arrayObj)); 
+        this.setState({[target.id] : target.value});
     }
 
     checkPassWord(userData){
@@ -31,40 +21,40 @@ export default class Login extends React.Component {
                     "name": userData[0].name,
                     "events": userData[0].events
                 }
-                this.setLocalStorage("currentUser",userData);//adding userobj to local storage as current user
-                location.reload();
+                generalFunc.setLocalStorage("currentUser",userData);//adding userobj to local storage as current user
+                window.location.reload();
             }else{//if password doesn't match
-                $("#user-login-errorMsg").html("Incorrect password");
+                this.setState({"errorMsg":'Incorrect password'});
             };
         }else{//if user doesn't exist
-            $("#user-login-errorMsg").html("Please enter a valid username");
+            this.setState({"errorMsg":'Please enter a valid username'});
         };
     };
 
     login(event){
-        $("#user-login-errorMsg").html("");
         event.preventDefault();//prevent reload on submit
-        if(UN.length !== 0 && Pass.length !== 0){//no empty input
-            let findUsersURL = buildDBURL("users", UN.toUpperCase());//building url to find user
-            callDB_API("GET", findUsersURL, checkPassWord);//calling db to find user and passing checkPassword as a callback func
+        if(this.state.username.length !== 0 && this.state.password.length !== 0){//no empty input
+            let URL = "/users/"+ this.state.username;
+            fetch(URL)
+                .then((res) => res.json())
+                .then((result) => this.checkPassWord(result))
         }else{//if no input
-            $("#user-login-errorMsg").html("Please fill out all field(s)!");
+            this.setState({"errorMsg":"Please fill out all field(s)!"});
         };
     }
 
-    showlogin
 
     render(){
         return(
-            <div class="login">
+            <div className="login col1">
                 <h3>User Log In</h3>
-                <form id="user-login" onSubmit={this.login}>
+                <form id="user-login" onSubmit={this.login.bind(this)}>
                     <label>User Name:</label>
-                    <input type="text" id="username"></input>
+                    <input type="text" id="username" onChange={this.storeInputValue.bind(this)}></input>
                     <br/>
                     <label>User Password:</label>
-                    <input type="text" id="password"></input>
-                    <div id="user-login-errorMsg"></div>
+                    <input type="text" id="password" onChange={this.storeInputValue.bind(this)}></input>
+                    <div id="user-login-errorMsg">{this.state.errorMsg}</div>
                     <button type="submit">Log In</button>
                 </form>
             </div>

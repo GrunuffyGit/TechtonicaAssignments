@@ -68,9 +68,11 @@ li{
 }
 
 .list-of-events{
+    margin-top: 20px;
     border-style: solid;
-    width: 50%;
+    width: 70%;
     padding-top: 10px;
+    padding-right: 30px;
     padding-bottom: 10px;
 }
 
@@ -82,6 +84,10 @@ li{
     padding-right: 20px;
     border-radius: 50px !important;
     background-color: rgb(51, 109, 184);
+}
+
+label{
+    padding-right: 10px !important;
 }
 
 button{
@@ -110,6 +116,7 @@ a:hover{
 }
 
 .row{
+    width: 100vw;
     padding-top: 30px;
 }
 
