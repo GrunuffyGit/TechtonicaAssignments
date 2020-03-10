@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css?family=DM+Sans&display=swap');
+
+body{
+    font-family: 'DM Sans' !important;
+}
+
+.gheader{
+    text-align: center;
+    background-color: rgb(216, 238, 238)!important;
+    padding-top: 146px !important;
+    padding-bottom: 90px !important;
+}
+.homepage{
+    width: 100vw;
+    height: 100vh;
+    background: url("eventPic.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.navbar{
+    width: 100%;
+    padding-left: 80px !important;
+    position: fixed !important;
+    z-index: 1;
+}
+
+.nav-link:hover{
+    color: rgb(173, 173, 173) !important;
+}
+
+.logo{
+    padding-top: 13px !important;
+    padding-left: 80px;
+}
+
+.welcome{
+    text-align: center;
+    color: mintcream;
+    border-radius: 0px 10px 10px 0px;
+    position: relative;
+    top: 45%;
+    line-height: 1.8;
+}
+
+#user-welcome{
+    padding-bottom: 20px;
+}
+.page-content{
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 80px;
+    padding-right: 80px;
+    animation: fadeInDown 1s;
+}
+
+.col1{
+    padding-left: 50px !important;
+}
+
+ul{
+    padding-left: 0px !important;
+    list-style: none;
+}
+
+li{
+    padding-left: 40px !important;
+}
+
+.list-of-events{
+    margin-top: 20px;
+    border-style: solid;
+    width: 70%;
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+}
+
+#get-started{
+    font-size: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 50px !important;
+    background-color: rgb(51, 109, 184);
+}
+
+label{
+    padding-right: 10px !important;
+}
+
+button{
+    padding: 10px;
+    border-radius: 20px !important;
+    background-color: rgb(51, 109, 184);
+    color: rgb(251, 251, 251) !important;
+    text-decoration: none;
+    border: none;
+}
+
+button:focus {
+    outline:none !important;
+}
+
+button:hover{
+    background-color: rgb(26, 68, 124);
+}
+
+a{
+    color: rgb(251, 251, 251) !important;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+.row{
+    width: 100vw;
+    padding-top: 30px;
+}
+
+.col{
+    text-align: left !important;
+    padding-right: 0px !important;
+}
+
+@keyframes fadeInDown{
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

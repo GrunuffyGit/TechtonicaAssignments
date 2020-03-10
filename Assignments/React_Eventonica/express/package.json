@@ -1,0 +1,24 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "package",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "entry point": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "noen"
+  ],
+  "author": "noen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2"
+  }
+}
