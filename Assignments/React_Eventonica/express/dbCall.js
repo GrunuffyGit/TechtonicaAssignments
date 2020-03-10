@@ -39,7 +39,7 @@ class EventRecommender {
 
   getAllUserEvents = function(req, res) {
     const eventid = req.params.id;
-    pool.query(`SELECT * FROM users WHERE events @> '[{"id": "${eventid}"}]';`, function(error, results){
+    pool.query(`SELECT * FROM users WHERE events @> '[{"id": ${eventid}}]';`, function(error, results){
       if (error) {
         throw error;
       }
