@@ -165,6 +165,10 @@ COPY public.individuals (id, nickname, species, created) FROM stdin;
 13	LEMONS	3	2020-03-12
 14	LIMES	3	2020-03-12
 16	KANE	3	2020-03-12
+17	MEOW	4	2020-03-12
+18	MEOWTH	4	2020-03-12
+19	LEO	4	2020-03-12
+20	PIKAKA	6	2020-03-12
 \.
 
 
@@ -175,6 +179,16 @@ COPY public.individuals (id, nickname, species, created) FROM stdin;
 COPY public.sightings (id, individual, location, health, poc, date_spotted) FROM stdin;
 7	9	SF	okay	example@example.com	2020-03-12
 13	9	SF	okay	example@example.com	2020-03-18
+14	9	SF	okay	example@example.com	2020-03-18
+15	9	SF	okay	example@example.com	2020-03-18
+16	9	SF	okay	example@example.com	2020-03-18
+17	9	SF	okay	example@example.com	2020-03-18
+18	9	SF	okay	example@example.com	2020-03-18
+19	9	SF	okay	example@example.com	2020-03-18
+20	9	SF	okay	example@example.com	2020-03-18
+21	9	SF	okay	example@example.com	2020-03-18
+22	9	SF	okay	example@example.com	2020-03-12
+23	20	SF	okay	example@example.com	2020-03-12
 \.
 
 
@@ -194,14 +208,14 @@ COPY public.species (id, common_name, scientific_name, population, status_code, 
 -- Name: individuals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbuser
 --
 
-SELECT pg_catalog.setval('public.individuals_id_seq', 16, true);
+SELECT pg_catalog.setval('public.individuals_id_seq', 20, true);
 
 
 --
 -- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbuser
 --
 
-SELECT pg_catalog.setval('public.sightings_id_seq', 13, true);
+SELECT pg_catalog.setval('public.sightings_id_seq', 23, true);
 
 
 --
