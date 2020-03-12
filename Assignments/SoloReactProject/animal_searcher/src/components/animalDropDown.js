@@ -16,8 +16,12 @@ export default class AnimalDropDown extends React.Component {
             const request = async() => {
                 const response = await fetch(`/individual/species/${ID}`);
                 const json = await response.json();
-                this.setState({options:this.animalsInSpeciesOptionHTML(json)});
-                this.setState({optionsVal : json[0].id});
+                if(json.length>0){
+                    this.setState({options:this.animalsInSpeciesOptionHTML(json)});
+                    this.setState({optionsVal : json[0].id});
+                }else{
+                    this.setState({options : []});
+                }
             }
             request();
         }
@@ -36,8 +40,10 @@ export default class AnimalDropDown extends React.Component {
         } 
     }
 
-    componentDidMount(){
-        this.getListOfAnimalsInSpecies(this.props.speciesID);
+    componentDidUpdate(prevProps){
+        if(this.props.speciesID !== prevProps.speciesID){
+            this.getListOfAnimalsInSpecies(this.props.speciesID);
+        }
     }
 
     render(){
