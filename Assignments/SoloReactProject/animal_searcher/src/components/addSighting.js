@@ -4,7 +4,7 @@ import AnimalDropDown from "../components/animalDropDown";
 
 export default class AddSighting extends React.Component {
     state={
-        // speciesID:'',
+        speciesID:'',
         individual:'',
         location :'',
         health: '',
@@ -61,11 +61,10 @@ export default class AddSighting extends React.Component {
     render(){
         return(
             <form onSubmit={this.addSighting.bind(this)}>
-                {/* <label>Species: </label>
-                <SpeciesDropDown sendData={this.storeSpeciesIDValue.bind(this)}/> */}
+                <label>Species: </label>
+                <SpeciesDropDown sendData={this.storeSpeciesIDValue.bind(this)}/>
                 <label>Animal ID: </label>
-                {/* <AnimalDropDown sendData={this.storeAnimalIDValue.bind(this)} speciesID={this.state.speciesID}/> */}
-                <input type="text" id="individual" onChange={this.storeInputValue.bind(this)}></input>
+                <AnimalDropDown sendData={this.storeAnimalIDValue.bind(this)} speciesID={this.state.speciesID}/>
                 <br/>
                 <label>Location: </label>
                 <input type="text" id="location" onChange={this.storeInputValue.bind(this)}></input>
