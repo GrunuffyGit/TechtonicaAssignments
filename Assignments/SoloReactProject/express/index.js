@@ -17,6 +17,7 @@ app.get('/species', animal.getSpecies);
 app.post('/species', animal.createSpecies);
 app.delete('/species/:id', animal.deleteSpecies);
 
+app.get('/sighting/all/', animal.getAllSightings);
 app.get('/sighting/:id', animal.getSightings);
 app.post('/sighting', animal.createSightings);
 app.delete('/sighting/:id', animal.deleteSightings);

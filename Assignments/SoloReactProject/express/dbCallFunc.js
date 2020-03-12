@@ -83,6 +83,15 @@ class animaldb {
                 });
     } 
 
+    getAllSightings = function(req, res){
+        pool.query('SELECT * FROM sightings;', function(error, results){
+                if (error) {
+                    throw error;
+                }
+                res.status(200).json(results.rows);
+                });
+    }
+
     getSightings = function(req, res){
         const animalId = req.params.id;
         pool.query('SELECT * FROM sightings WHERE individual = $1;',
