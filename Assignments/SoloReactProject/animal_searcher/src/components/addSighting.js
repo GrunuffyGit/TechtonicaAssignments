@@ -63,7 +63,7 @@ export default class AddSighting extends React.Component {
             <form onSubmit={this.addSighting.bind(this)}>
                 <label>Species: </label>
                 <SpeciesDropDown sendData={this.storeSpeciesIDValue.bind(this)}/>
-                <label>Animal ID: </label>
+                <label>Animal: </label>
                 <AnimalDropDown sendData={this.storeAnimalIDValue.bind(this)} speciesID={this.state.speciesID}/>
                 <br/>
                 <label>Location: </label>
