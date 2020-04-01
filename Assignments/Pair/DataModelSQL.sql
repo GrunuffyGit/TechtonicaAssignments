@@ -1,4 +1,4 @@
--- CREATE TABLE users(
+ -- CREATE TABLE users(
 --     id SERIAL PRIMARY KEY,
 --     username VARCHAR(30),
 --     email VARCHAR(30),
